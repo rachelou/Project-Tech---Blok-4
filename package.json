@@ -1,0 +1,37 @@
+{
+  "name": "fancy-datepicker",
+  "version": "1.0.0",
+  "description": "An elegant and easy-to-use datepicker.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "lint": "eslint .",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rachelou/Project-Tech---Blok-4.git"
+  },
+  "keywords": [
+    "datepicker"
+  ],
+  "author": "rachidelouali",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/rachelou/Project-Tech---Blok-4/issues"
+  },
+  "homepage": "https://github.com/rachelou/Project-Tech---Blok-4#readme",
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^2.0.22"
+  }
+}
