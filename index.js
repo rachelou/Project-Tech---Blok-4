@@ -1,8 +1,8 @@
 // Require the date-fns package
-const {format, addDays } = require('date-fns'); 
-
+// Package to parse, format, manupulate, compare, localize and calculate dates easily
+const { format, addDays } = require("date-fns");
 
 // Testing the package
 const today = new Date();
-const formattedDate = format(today, 'dd/MM/yyyy');
-console.log(`Today's date is: ${formattedDate}`); 
+const formattedDate = format(today, "dd/MM/yyyy");
+console.log(`Today's date is: ${formattedDate}`);
