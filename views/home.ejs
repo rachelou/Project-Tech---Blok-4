@@ -1,0 +1,20 @@
+<%- include('mixins.ejs') %>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>List Example</title>
+</head>
+<body>
+    <%- include('header.ejs') %>
+  <h1>List Example</h1>
+  <ul>
+    <%= button("Click me", "/example") %>
+    <% items.forEach(function(item) { %>
+      <li><%= item %></li>
+    <% }); %>
+  </ul>
+  <%- include('footer.ejs') %>
+</body>
+</html>
+
