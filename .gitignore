@@ -13,3 +13,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.swp
+.eslintrc.js
+
+# other
+.DS_Store
