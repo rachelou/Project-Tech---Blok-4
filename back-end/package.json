@@ -29,11 +29,7 @@
     "install": "^0.13.0",
     "moment": "^2.29.4",
     "mongodb": "^5.5.0",
-    "npm": "^9.6.6",
-    "react": "^16.14.0",
-    "react-addons-css-transition-group": "^15.6.2",
-    "react-dates": "^21.8.0",
-    "react-dom": "^16.14.0"
+    "npm": "^9.6.6"
   },
   "devDependencies": {
     "eslint": "^8.39.0",
@@ -42,5 +38,8 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^2.0.22"
+  },
+  "directories": {
+    "test": "test"
   }
 }
