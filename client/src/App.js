@@ -12,17 +12,18 @@ const location = "Amsterdam"; // Replace with the desired location
 const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4`;
 
 export default function BasicDateRangeCalendar() {
-  const [dateRange, setDateRange] = useState([null, null]); // State to store selected date range
-  const [serverResponse, setServerResponse] = useState(""); // State to store server response
-  const [weatherForecast, setWeatherForecast] = useState([]); // State to store weather forecast data
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [serverResponse, setServerResponse] = useState("");
+  const [weatherForecast, setWeatherForecast] = useState([]);
+  const [buttonDisabled, setButtonDisabled] = useState(false); // New state for button disabled state
 
   useEffect(() => {
     axios
       .get(apiUrl)
       .then((response) => {
         const weatherData = response.data;
-        const forecastData = weatherData.forecast.forecastday.slice(1, 5); // Extract forecast data for the next 4 days
-        setWeatherForecast(forecastData); // Store the forecast data in state
+        const forecastData = weatherData.forecast.forecastday.slice(1, 5);
+        setWeatherForecast(forecastData);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -30,12 +31,13 @@ export default function BasicDateRangeCalendar() {
   }, []);
 
   const handleDateRangeSelect = (range) => {
-    setDateRange(range); // Update the date range state when a range is selected
+    setDateRange(range);
   };
 
   const handleButtonClick = () => {
+    setButtonDisabled(true); // Disable the button when clicked
+
     fetch("http://localhost:4123/submit-date-range", {
-      // Replace with your server endpoint URL
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +46,7 @@ export default function BasicDateRangeCalendar() {
     })
       .then((response) => response.text())
       .then((data) => {
-        setServerResponse(data); // Store the server response in state
+        setServerResponse(data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -53,16 +55,15 @@ export default function BasicDateRangeCalendar() {
 
   const theme = createTheme({
     typography: {
-      fontFamily: "Poppins", // Change the font family here
+      fontFamily: "Poppins",
     },
     palette: {
       primary: {
-        main: "#001DF5", // Customize the primary color
+        main: "#001DF5",
       },
       secondary: {
-        main: "#ffffff", // Customize the secondary color
+        main: "#ffffff",
       },
-      // Add more customizations to the palette if needed
     },
   });
 
@@ -79,7 +80,7 @@ export default function BasicDateRangeCalendar() {
     borderRadius: "2rem",
     boxShadow: "0 0 6px rgba(0, 0, 0, 0.1)",
     margin: "1rem",
-    marginBottom: "2rem", // Add margin bottom of 2rem
+    marginBottom: "2rem",
     borderRight: "none",
   };
 
@@ -92,10 +93,12 @@ export default function BasicDateRangeCalendar() {
   const buttonStyles = {
     width: "fit-content",
     padding: "0.5rem 1rem",
+    backgroundColor: buttonDisabled ? "#999999" : undefined, // Change button color if disabled
+    color: buttonDisabled ? "white" : undefined, // Change button color if disabled
   };
 
   const weatherAreaStyles = {
-    margin: "2rem", // Add margin of 2rem
+    margin: "2rem",
   };
 
   return (
@@ -104,7 +107,7 @@ export default function BasicDateRangeCalendar() {
         <div style={containerStyles}>
           <DemoContainer components={["DateRangeCalendar"]}>
             <center>
-              <h1>Fancy Datepicker 💫 </h1>{" "}
+              <h1>Fancy Datepicker 💫 </h1>
             </center>
             <div style={calendarStyles}>
               <DateRangeCalendar
@@ -118,6 +121,7 @@ export default function BasicDateRangeCalendar() {
                     variant="contained"
                     onClick={handleButtonClick}
                     style={buttonStyles}
+                    disabled={buttonDisabled} // Set the disabled state of the button
                   >
                     Reserve
                   </Button>

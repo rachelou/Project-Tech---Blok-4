@@ -2,33 +2,27 @@ const express = require("express");
 const app = express();
 const ejs = require("ejs");
 const dotenv = require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient } = require("mongodb");
 const uri = process.env.MONGO_URI;
 const bodyParser = require("body-parser");
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+// Create a MongoClient
+const client = new MongoClient(uri);
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    // Connect the client to the server
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error);
   }
 }
+
 run().catch(console.dir);
 
 console.log("Connected to MongoDB");
@@ -54,13 +48,23 @@ app.use((req, res, next) => {
 // connecting back-end
 app.use(bodyParser.json());
 
-app.post("/submit-date-range", (req, res) => {
-  const dateRange = req.body; // Access the date range sent in the request body
-  console.log("Received date range:", dateRange);
+app.post("/submit-date-range", async (req, res) => {
+  try {
+    const dateRange = req.body; // Access the date range sent in the request body
+    const dbo = client.db("fancy-datepicker"); // Access the database from the client
+    console.log("Received date range:", dateRange);
 
-  // Perform any necessary actions with the date range data
+    // Perform any necessary actions with the date range data
 
-  res.send("Success"); // Send a response back to the client
+    const reservedDate = await dbo
+      .collection("reserved-dates")
+      .insertOne({ dateRange });
+    console.log("Date inserted:", reservedDate);
+    res.send("Success"); // Send a response back to the client
+  } catch (error) {
+    console.error("Failed to insert document:", error);
+    res.status(500).send("Error inserting document");
+  }
 });
 
 // Homepage rendering
