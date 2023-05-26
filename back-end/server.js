@@ -54,8 +54,7 @@ app.post("/submit-date-range", async (req, res) => {
     const dbo = client.db("fancy-datepicker"); // Access the database from the client
     console.log("Received date range:", dateRange);
 
-    // Perform any necessary actions with the date range data
-
+    // Insert the date range into the "reserved-dates" collection
     const reservedDate = await dbo
       .collection("reserved-dates")
       .insertOne({ dateRange });

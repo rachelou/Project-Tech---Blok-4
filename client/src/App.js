@@ -7,17 +7,20 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
+// API details
 const apiKey = "509917b15cee4c22b96205129232405";
-const location = "Amsterdam"; // Replace with the desired location
+const location = "Amsterdam";
 const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4`;
 
 export default function BasicDateRangeCalendar() {
+  // State variables
   const [dateRange, setDateRange] = useState([null, null]);
   const [serverResponse, setServerResponse] = useState("");
   const [weatherForecast, setWeatherForecast] = useState([]);
   const [buttonDisabled, setButtonDisabled] = useState(false); // New state for button disabled state
 
   useEffect(() => {
+    // Fetch weather data on component mount
     axios
       .get(apiUrl)
       .then((response) => {
@@ -31,12 +34,15 @@ export default function BasicDateRangeCalendar() {
   }, []);
 
   const handleDateRangeSelect = (range) => {
+    // Update date range when selected
     setDateRange(range);
   };
 
   const handleButtonClick = () => {
+    // Handle button click
     setButtonDisabled(true); // Disable the button when clicked
 
+    // Send date range data to server
     fetch("http://localhost:4123/submit-date-range", {
       method: "POST",
       headers: {
@@ -46,13 +52,14 @@ export default function BasicDateRangeCalendar() {
     })
       .then((response) => response.text())
       .then((data) => {
-        setServerResponse(data);
+        setServerResponse(data); // Set server response
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
 
+  // Custom theme for MUI components
   const theme = createTheme({
     typography: {
       fontFamily: "Poppins",
@@ -67,6 +74,7 @@ export default function BasicDateRangeCalendar() {
     },
   });
 
+  // Styles for container, calendar, button, and weather area
   const containerStyles = {
     display: "flex",
     justifyContent: "center",
@@ -105,11 +113,13 @@ export default function BasicDateRangeCalendar() {
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <div style={containerStyles}>
+          {/* Demo container for MUI components */}
           <DemoContainer components={["DateRangeCalendar"]}>
             <center>
               <h1>Fancy Datepicker 💫 </h1>
             </center>
             <div style={calendarStyles}>
+              {/* DateRangeCalendar component */}
               <DateRangeCalendar
                 calendars={2}
                 value={dateRange}
@@ -117,6 +127,7 @@ export default function BasicDateRangeCalendar() {
               />
               {dateRange[0] !== null && dateRange[1] !== null && (
                 <div style={buttonContainerStyles}>
+                  {/* Button component */}
                   <Button
                     variant="contained"
                     onClick={handleButtonClick}
@@ -129,6 +140,7 @@ export default function BasicDateRangeCalendar() {
               )}
               {weatherForecast.length > 0 && (
                 <div style={weatherAreaStyles}>
+                  {/* Weather forecast */}
                   <h3>☀️ Weather Forecast</h3>
                   <ul style={{ listStyle: "none", padding: 0 }}>
                     {weatherForecast.map((day, index) => (
