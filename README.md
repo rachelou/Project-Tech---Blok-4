@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+## Fancy Datepicker  💫
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Concept Feature
+  
+De Datepicker-functie is speciaal ontworpen voor ontwikkelaars en heeft verschillende doeleinden. Deze functie kan worden toegepast in toepassingen zoals het boeken van hotels, vluchten en andere diensten. Het belangrijkste doel is om het gebruiksgemak te maximaliseren tijdens het boekingsproces, door gebruikers moeiteloos datums te laten selecteren.
+  
+### Voordat je start
+Zorg ervoor dat je eerst de volgende dingen hebt geinstalleerd.
 
-## Available Scripts
+-   Node.js
+-   NPM
+-   Git
+-   MongoDB Compass
 
-In the project directory, you can run:
+###  Starten van de server
 
-### `npm start`
+#### Front-end
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Voer de volgende stappen uit:  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1.  Open een terminal en navigeer naar een map waar jij mijn repository in wilt opslaan.
+    
+2.  Clone deze repository:
+    
 
-### `npm test`
+```
+git clone https://github.com/rachelou?tab=repositories
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
 
-### `npm run build`
+3.  Wanneer dit is gelukt heb je de repository op je eigen computer gedownload. Navigeer naar deze repository in de terminal. Je wilt nu alle packages installeren die je nodig hebt voor deze feature. Om dit project vervolgens te laten werken voer je het volgende commando uit:  
+    
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4.  Als je het project wilt gebruiken navigeer dan naar de "client" map binnen het project" en voer de volgende commando uit:
 
-### `npm run eject`
+```
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Ga naar een browser en navigeer naar: localhost:3000  
+Als alles goed is zie je Datepicker app tevoorschijn komen. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Back-end
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Navigeer terug naar de "back-end" folder. 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. voer de volgende commando uit:
+```
+node server.js
+```
+3. Ga naar een browser en navigeer naar: localhost: 4123  
+Als alles goed is zie je een tekst met "This is your Homepage"
 
-## Learn More
+###  Verander de naam van EXAMPLE.env  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**De applicatie vereist enkele variabelen die je zelf plaatsen in een '.env' bestand.**
+  
+Momenteel is er g een EXAMPLE.env.env bestand in de back-end map, verander de naam van 'EXAMPLE.env' naar alleen '.env'.  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Koppelen van de database
+Om de app daadwerkelijk ook te laten werken moet je een database koppelen aan de app.  
 
-### Code Splitting
+Voor dit project wordt er gebruik gemaakt van een MongoDB database. Als je meer wilt weten over de database structuur en de manier waarop de gegevens zijn georganiseerd, nodig ik je uit om de pagina [Database Structure](https://github.com/rachelou/Project-Tech---Blok-4/wiki/Database-Structuur) in mijn wiki te raadplegen. Het geeft je inzicht in de structuur en organisatie van de gegevens die binnen dit project worden gebruikt.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### API werkend maken
 
-### Analyzing the Bundle Size
+Naast het koppelen van de database moet er ook verbinding gemaakt worden met de API van Weather API
+Om deze API te laten werken moet je eerst een account aanmaken bij op de [website van Weater API](https://www.weatherapi.com/). Hier kun je de API Key kopiëren en vervolgens plakken in de app.js bestand binnen de "client map"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+const  apiKey  =  ""; <API KEY
 
-### Making a Progressive Web App
+const  location  =  "Amsterdam"; <LOCATIE
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+const  apiUrl  =  `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4`; <DYNAMISCHE LINK
 
-### Advanced Configuration
+```
+## Documentatie
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Dit project is het resultaat van een combinatie van ideeën en uitgebreid onderzoek. De volledige documentatie van dit proces is te vinden in de [wiki](https://github.com/rachelou/Project-Tech---Blok-4/wiki) van deze repository. In de wiki kun je meer lezen over het ontstaan van mijn concept en de verschillende functies die zijn ontwikkeld. Daarnaast heb ik grondig onderzoek gedaan naar diverse onderwerpen die relevant zijn voor dit project. De wiki biedt gedetailleerde inzichten in de overwegingen en bevindingen tijdens het creatieve proces en de implementatie van de functionaliteiten.
 
-### Deployment
+## [](https://github.com/rachelou/Project-Tech---Blok-4/blob/main/LICENSE) License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+© Rachid el Ouali
 
-### `npm run build` fails to minify
+Licensed under the  [MIT License](https://github.com/rachelou/Project-Tech---Blok-4/blob/main/LICENSE)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+
+Naam - Rachid el Ouali
+Email -  [rachid.el.ouali@hva.nl](mailto:rachid.el.ouali@hva.n)  
+Project -  [https://github.com/stefanradouane/bloktech-individueel](https://github.com/rachelou?tab=repositories)
+
+
+
+
+
+
+
+
+
+
