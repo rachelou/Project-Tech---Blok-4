@@ -9,8 +9,6 @@ import axios from "axios";
 
 // API details
 const apiKey = "509917b15cee4c22b96205129232405";
-const location = "Amsterdam";
-const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4`;
 
 export default function BasicDateRangeCalendar() {
   // State variables
@@ -20,17 +18,28 @@ export default function BasicDateRangeCalendar() {
   const [buttonDisabled, setButtonDisabled] = useState(false); // New state for button disabled state
 
   useEffect(() => {
-    // Fetch weather data on component mount
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        const weatherData = response.data;
-        const forecastData = weatherData.forecast.forecastday.slice(1, 5);
-        setWeatherForecast(forecastData);
-      })
-      .catch((error) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${latitude},${longitude}&days=4`;
+
+        // Fetch weather data based on user's location
+        axios
+          .get(apiUrl)
+          .then((response) => {
+            const weatherData = response.data;
+            const forecastData = weatherData.forecast.forecastday.slice(1, 5);
+            setWeatherForecast(forecastData);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      },
+      (error) => {
         console.error("Error:", error);
-      });
+      }
+    );
   }, []);
 
   const handleDateRangeSelect = (range) => {
