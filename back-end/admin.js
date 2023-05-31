@@ -1,1 +1,0 @@
-Hier komt de admin view

@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const ejs = require("ejs");
 const dotenv = require("dotenv").config();
@@ -6,14 +7,17 @@ const { MongoClient } = require("mongodb");
 const uri = process.env.MONGO_URI;
 const bodyParser = require("body-parser");
 
-// Create a MongoClient
+// Create a MongoClient & declare db and collection name
 const client = new MongoClient(uri);
+const dbName = "fancy-datepicker";
+const collectionName = "reserved-dates";
 
+// Functie om verbinding te maken met MongoDB
 async function run() {
   try {
-    // Connect the client to the server
+    // Maak verbinding met de MongoDB-server
     await client.connect();
-    // Send a ping to confirm a successful connection
+    // Verstuur een ping om een succesvolle verbinding te bevestigen
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
@@ -45,34 +49,46 @@ app.use((req, res, next) => {
   }
 });
 
-// connecting back-end
+// Middleware voor het parsen van JSON-data
 app.use(bodyParser.json());
 
+// Route voor het verwerken van het verzenden van de date range
 app.post("/submit-date-range", async (req, res) => {
   try {
-    const dateRange = req.body; // Access the date range sent in the request body
-    const dbo = client.db("fancy-datepicker"); // Access the database from the client
+    const dateRange = req.body; // Haal de date range op uit het request body
+    const dbo = client.db("fancy-datepicker"); // Haal de database op van de client
     console.log("Received date range:", dateRange);
 
-    // Insert the date range into the "reserved-dates" collection
+    // Voeg de date range toe aan de "reserved-dates" collectie
     const reservedDate = await dbo
       .collection("reserved-dates")
       .insertOne({ dateRange });
     console.log("Date inserted:", reservedDate);
-    res.send("Success"); // Send a response back to the client
+    res.send("Success"); // Stuur een response terug naar de client
   } catch (error) {
     console.error("Failed to insert document:", error);
     res.status(500).send("Error inserting document");
   }
 });
 
-// Homepage rendering
-app.get("", (req, res) => {
-  res.send("This is the homepage");
-});
+// Stel EJS in als view engine
+app.set("view engine", "ejs"); // activeer EJS als templating engine
+app.set("views", path.join(__dirname, "views")); // geef de locatie van de view-bestanden aan
+app.use("/static", express.static(path.join(__dirname, "static"))); // serveer CSS-bestanden
 
-app.get("/about", (req, res) => {
-  res.send("This app helps you pick a date for your next event.");
+// Homepage rendering
+app.get("", async (req, res) => {
+  try {
+    const client = await MongoClient.connect(uri);
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+    const dates = await collection.find().toArray();
+    res.render("admin.ejs", { dates: dates, name: "" });
+    client.close();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // Error handling
@@ -80,10 +96,7 @@ app.use((req, res) => {
   res.status(404).send("404 Not Found");
 });
 
-// Serve static files
-app.use(express.static("static"));
-
-// Start the server
+// Start de server
 app.listen(process.env.PORT || 4123, () => {
   console.log("Server started on port 4123");
 });
