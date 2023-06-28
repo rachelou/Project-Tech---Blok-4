@@ -1,27 +1,40 @@
 .containerStyles {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 100vh;
 }
 
 .calendarStyles {
-  color: #00000;
+  color: #000000;
   background-color: #ffffff;
   border-radius: 2rem;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
   margin: 1rem;
   margin-bottom: 2rem;
   border-right: none;
 }
 
 .buttonContainerStyles {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-end;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   margin: 2rem;
 }
 
 .buttonStyles {
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
   width: fit-content;
   padding: 0.5rem 1rem;
 }
@@ -33,4 +46,8 @@
 
 .weatherAreaStyles {
   margin: 2rem;
+}
+
+body {
+  background-color: #f3f8fc;
 }
